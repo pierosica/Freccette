@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -15,9 +16,9 @@
                   <HBox fx:id="hbox" alignment="CENTER" layoutY="3.0" spacing="10.0" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <TextField fx:id="txtNome1" promptText="Nome Giocatore 1" />
-                        <TextField fx:id="txtNome2" editable="false" promptText="Nome Giocatore 2" />
-                        <TextField fx:id="txtNome3" editable="false" promptText="Nome Giocatore 3" />
-                        <TextField fx:id="txtNome4" editable="false" promptText="Nome Giocatore 4" />
+                        <TextField fx:id="txtNome2" promptText="Nome Giocatore 2" />
+                        <TextField fx:id="txtNome3" promptText="Nome Giocatore 3" />
+                        <TextField fx:id="txtNome4" promptText="Nome Giocatore 4" />
                      </children>
                   </HBox>
                   <Button fx:id="btnNuovaPartita" defaultButton="true" layoutX="240.0" layoutY="54.0" mnemonicParsing="false" onAction="#doNuovaPartita" text="Inizia Partita" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
