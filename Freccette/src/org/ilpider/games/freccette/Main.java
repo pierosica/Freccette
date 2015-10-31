@@ -3,7 +3,7 @@ package org.ilpider.games.freccette;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
@@ -11,10 +11,14 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Welcome.fxml"));
-			BorderPane root = (BorderPane) loader.load();
-			Scene scene = new Scene(root, 400, 400);
+			AnchorPane root = (AnchorPane) loader.load();
+			Scene scene = new Scene(root);
+
 			scene.getStylesheets().add(getClass().getResource("view/application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.sizeToScene();
+			primaryStage.setMinWidth(600);
+			primaryStage.setMinHeight(350);
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
