@@ -45,27 +45,21 @@ public class WelcomeController {
 
 	private List<TextField> listNomi;
 
-	private PartitaModel partita;
+	private PartitaModel partitaModel;
 
 	/**
-	 * Crea una nuova {@link PartitaModel} e per ciascuno dei {@link TextField}
-	 * in {@link listNomi} il cui getText è diverso da null, crea un
-	 * {@link Giocatore} e lo aggiunge alla listaGiocatori di
-	 * {@link PartitaModel}
+	 * Crea una nuova {@link PartitaModel} e per ciascuno dei {@link TextField} in {@link listNomi} il cui getText è diverso da null, crea un {@link Giocatore} e lo aggiunge alla listaGiocatori di {@link PartitaModel}
 	 * 
 	 * @param event
 	 */
 	@FXML
 	void doNuovaPartita(ActionEvent event) {
 
-		if (partita == null) {
-			this.partita = new PartitaModel();
-			listNomi.forEach(tf -> {
-				if ( ! tf.getText().isEmpty() ) {
-					partita.addGiocatore(tf.getText());
-				}
-			});
-		}
+		listNomi.forEach(tf -> {
+			if (!tf.getText().isEmpty()) {
+				partitaModel.addGiocatore(tf.getText());
+			}
+		});
 	}
 
 	@FXML
@@ -77,8 +71,7 @@ public class WelcomeController {
 		assert txtNome3 != null : "fx:id=\"txtNome3\" was not injected: check your FXML file 'Welcome.fxml'.";
 
 		/*
-		 * con i bind controllo la proprieta' isDisabled delle txtNome3 e
-		 * txtNome4 e del btnNuovaéartita
+		 * con i bind controllo la proprieta' isDisabled delle txtNome3 e txtNome4 e del btnNuovaéartita
 		 */
 		txtNome3.disableProperty().bind(txtNome2.textProperty().isEmpty());
 		txtNome4.disableProperty().bind(txtNome3.textProperty().isEqualTo(""));
@@ -86,8 +79,7 @@ public class WelcomeController {
 				.bind(Bindings.or(txtNome1.textProperty().isEmpty(), txtNome2.textProperty().isEmpty()));
 
 		/*
-		 * Creo un ArrayList in cui metto le txtNome* in modo da poter ciclare
-		 * sulla lista per vedere quali giocatori gestire
+		 * Creo un ArrayList in cui metto le txtNome* in modo da poter ciclare sulla lista per vedere quali giocatori gestire
 		 */
 		listNomi = new ArrayList<>();
 		listNomi.add(txtNome1);
@@ -96,8 +88,7 @@ public class WelcomeController {
 		listNomi.add(txtNome4);
 
 		/*
-		 * Listener per evitare che il focus vada su txtNome1 all'avvio del
-		 * programma
+		 * Listener per evitare che il focus vada su txtNome1 all'avvio del programma
 		 */
 		final BooleanProperty firstTime = new SimpleBooleanProperty(true);
 		txtNome1.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -108,8 +99,7 @@ public class WelcomeController {
 		});
 	}
 
-
-	public void setPartita(PartitaModel partita) {
-		this.partita = partita;
+	public void setPartitaModel(PartitaModel partitaModel) {
+		this.partitaModel = partitaModel;
 	}
 }

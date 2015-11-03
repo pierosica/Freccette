@@ -26,29 +26,29 @@ public class PartitaModel {
 	/**
 	 * Costruttore con parametro per creare una nuova partita mantenendo la lista gia' usata per le partite precedenti
 	 * 
-	 * @param partita E' la lista di giocatorisu cui si basa la nuova partitia
+	 * @param partita E' la lista di giocatori su cui si basa la nuova partita
 	 */
 	public PartitaModel(List<Giocatore> partita) {
 		super();
 		this.partita = partita;
 	}
 
-
 	/**
 	 * 
-
 	 * @param nome
 	 */
 	public void addGiocatore(String nome) {
 
 		GiocatoreDAO dao = new GiocatoreDAO();
 
+		partita.removeAll(partita) ;
 		if ( ! dao.esisteGiocatoreByNome(nome)) {
 			// se il giocatore NON esiste
-			System.out.println("non esiste");
+//			System.out.println("non esiste");
 			dao.addGiocatore(nome) ;
 		}
-		this.partita.add(dao.giocatoreByNome(nome)) ;
+		this.partita.add(dao.readGiocatoreByNome(nome)) ;
+		partita.forEach(g -> System.out.println("ID: " + g.getId() + " nome: " + g.getNome()));
 	}
 
 	public int getNumeroGiocatori() {

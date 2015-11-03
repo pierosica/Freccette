@@ -70,8 +70,8 @@ public class GiocatoreDAO {
 	 * Restituisce TRUE se nel database esiste gia' un giocatore che ha il nome
 	 * di quello che sta verificando se inserire o no.
 	 * 
-	 * @param g
-	 *            E' il giocatore da verificare se e' gia' presente nel database
+	 * @param nome
+	 *            E' il nome del giocatore da verificare se e' gia' presente nel database
 	 * @return TRUE se esiste un record che ha lo stesso nome, FALSE se invece
 	 *         non lo trova
 	 */
@@ -105,7 +105,7 @@ public class GiocatoreDAO {
 	 *            E' il nome del giocatore da trovare
 	 * @return il {@link Giocatore}
 	 */
-	public Giocatore giocatoreByNome(String nome) {
+	public Giocatore readGiocatoreByNome(String nome) {
 
 		Connection conn = DBConnect.getConnection();
 		String query = "SELECT * from `tblgiocatori` where `nome` = ?";
@@ -129,9 +129,11 @@ public class GiocatoreDAO {
 	/**
 	 * Aggiunge il {@link Giocatore} g nel database e restituisce il valore del campo ID del record appena inserito
 	 * 
-	 * @param g
-	 *            {@link Giocatore} da inserire nel database
-	 * @return l'ID del record appena inserito
+	 * @param nome
+	 *            nome del {@link Giocatore} da inserire nel database
+	 * @return l'ID del record appena inserito. Se si verifica un errore nell'esecuzione della INSERT -> return 99;
+	 * Se va male la connessione al DB -> return -1;
+	 * 
 	 */
 	public int addGiocatore(String nome) {
 
@@ -139,13 +141,24 @@ public class GiocatoreDAO {
 		String query = "INSERT INTO `tblgiocatori`(`ID`, `Nome`) VALUES (null,?)";
 
 		try {
-			PreparedStatement st1 = conn.prepareStatement(query);
-			System.out.println(query);
+			PreparedStatement st1 = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+//			System.out.println(query);
 			st1.setString(1, nome);
-			int rowInserted = st1.executeUpdate();
-			return rowInserted;
+		
+//			int rowInserted = st1.executeUpdate();
+			int IDGiocatore = st1.executeUpdate() ;
+			ResultSet rs1 = st1.getGeneratedKeys();
+			if (rs1.next()) {
+				IDGiocatore = rs1.getInt(1);
+				System.out.println("ID del Giocatore: " + IDGiocatore);
+				/* ritorna IDGiocatore che ha valore uguale al campo ID del record del Giocatore appena inserito */
+				return IDGiocatore;
+			}
+			/* ritorna 99 se NON e' riuscito ad inserire il Giocatore nella tabella */
+			return 99;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			/* ritorna -1 se è andata male la connessione con il database */
 			return -1;
 		}
 	}
