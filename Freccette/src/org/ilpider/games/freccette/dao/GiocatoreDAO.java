@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.ilpider.games.freccette.model.Giocatore;
 
@@ -61,7 +63,7 @@ public class GiocatoreDAO {
 			conn.close();
 			return nome;
 		} catch (SQLException e) {
-			System.out.println("non connetto");
+//			System.out.println("non connetto");
 			return null;
 		}
 	}
@@ -82,7 +84,7 @@ public class GiocatoreDAO {
 
 		try {
 			PreparedStatement st1 = conn.prepareStatement(query);
-			System.out.println(query);
+//			System.out.println(query);
 			st1.setString(1, nome);
 			st1.execute();
 			ResultSet rs1 = st1.executeQuery();
@@ -96,6 +98,24 @@ public class GiocatoreDAO {
 		}
 		return false;
 	}
+
+	
+	
+	
+	
+	public List<Giocatore> readGiocatoreByList(List<String> elencoNomi) {
+		List<Giocatore> listGiocatori = new ArrayList<>();
+		
+		elencoNomi.forEach(n -> listGiocatori.add(readGiocatoreByNome(n)));
+		
+		return listGiocatori;
+		
+	}
+	
+	
+	
+	
+	
 
 	/**
 	 * Restituisce il {@link Giocatore} che corrisponde a quello trovato nel
@@ -112,7 +132,7 @@ public class GiocatoreDAO {
 
 		try {
 			PreparedStatement st1 = conn.prepareStatement(query);
-			System.out.println(query);
+//			System.out.println(query);
 			st1.setString(1, nome);
 			st1.execute();
 			ResultSet rs1 = st1.executeQuery();
@@ -150,7 +170,7 @@ public class GiocatoreDAO {
 			ResultSet rs1 = st1.getGeneratedKeys();
 			if (rs1.next()) {
 				IDGiocatore = rs1.getInt(1);
-				System.out.println("ID del Giocatore: " + IDGiocatore);
+//				System.out.println("ID del Giocatore: " + IDGiocatore);
 				/* ritorna IDGiocatore che ha valore uguale al campo ID del record del Giocatore appena inserito */
 				return IDGiocatore;
 			}

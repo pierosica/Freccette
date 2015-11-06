@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.ilpider.games.freccette.model.Giocatore;
 import org.ilpider.games.freccette.model.PartitaModel;
 
 import javafx.beans.binding.Bindings;
@@ -48,18 +47,25 @@ public class WelcomeController {
 	private PartitaModel partitaModel;
 
 	/**
-	 * Crea una nuova {@link PartitaModel} e per ciascuno dei {@link TextField} in {@link listNomi} il cui getText è diverso da null, crea un {@link Giocatore} e lo aggiunge alla listaGiocatori di {@link PartitaModel}
+	 * Crea un ArraiList<String> e lo avvalora con TextField.getText() delle TextField che hanno isEmpty=false 
+	 * 
+	 * Lancia il metodoinizializzaPartita nel partitaModel passando come parametrol'ArrayList<String> 
 	 * 
 	 * @param event
 	 */
 	@FXML
 	void doNuovaPartita(ActionEvent event) {
-
+		// TODO vedere se ha senso restituire una List<String> in cui mettere solo i nomi e lanciare inizializzaPartita(List<String>)
+		// Se lasciato come e' ora lancio 2 volte il metodo inizializzaPartita e rischio di creare 2 volte la nuova finestra dei giocatori
+		
+		// 2015-10-06 fatta la modifica di cui sopra...vediamo...
+		List<String> elencoNomi = new ArrayList<>();
 		listNomi.forEach(tf -> {
 			if (!tf.getText().isEmpty()) {
-				partitaModel.addGiocatore(tf.getText());
+				elencoNomi.add(tf.getText());
 			}
 		});
+		partitaModel.inizializzaPartita(elencoNomi);
 	}
 
 	@FXML

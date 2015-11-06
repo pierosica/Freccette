@@ -37,12 +37,4 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
-	// TODO metodo creaNuovaPartita in Main
-	public void creaNuovaPartita() {
-		PartitaModel partitaModel = new PartitaModel() ;
-		WelcomeController controller = loader.getController() ;
-		controller.setPartitaModel(partitaModel);
-//		return model;
-	}
 }
