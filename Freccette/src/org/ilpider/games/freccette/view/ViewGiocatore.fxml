@@ -6,19 +6,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
 
-
-<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<GridPane gridLinesVisible="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ilpider.games.freccette.view.ViewGiocatoreController">
    <columnConstraints>
-      <ColumnConstraints />
+      <ColumnConstraints hgrow="ALWAYS" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Label text="ererwerwerwerwer">
-         <font>
-            <Font size="42.0" />
-         </font>
-      </Label>
+      <HBox prefWidth="200.0" GridPane.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="lblNome" focusTraversable="false" HBox.hgrow="NEVER">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPunti" HBox.hgrow="NEVER">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
    </children>
 </GridPane>

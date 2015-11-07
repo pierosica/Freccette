@@ -1,0 +1,135 @@
+/*
+.background {
+    -fx-background-color: #1d1d1d;
+}
+ */
+
+/*
+ * BUTTONS e related stuff
+ * 
+ * 
+ */
+.button {
+	-fx-background-color: #bfbfbf;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button:hover {
+	/* -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 1 , 1 ); */
+}
+
+.button:pressed {
+}
+
+.button-numero {
+	-fx-padding: 0.0 12.0 0.0 12.0;
+	-fx-font-size: 10.0pt;
+}
+
+.button-togli {
+	-fx-padding: 0.0 15.0 0.0 15.0;
+}
+
+.button-piu-meno {
+	-fx-alignment: center ;
+	-fx-padding: 0.0;
+	-fx-font-size: 8.0pt;	
+}
+
+
+/*
+ * TESTO
+ * 
+ * 
+ * 
+ */
+.text {
+/*	-fx-effect: dropshadow(one-pass-box , darkgray, 10, 0.0 , 4, 5);
+ * -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+ */
+}
+
+
+/*
+ * label e related
+ */
+ 
+.label-puntiCaricati {
+	-fx-font-size: 12.0pt;
+}
+
+
+/*
+ *  check-box e related stuff 
+ * 
+ * 
+ * .box{ e' il quadrato in cui compare il segno di spunta quando la check.box è selected }
+ * 	-fx-scale-* : 0.0 rende invisibile in una botta sola sia il .box sia il .mark
+ * 
+ * .mark{ e' il segno di spunta. -fx-shape è il path di un file svg }
+ * 	-fx-shape:   visto che non si vede non serve ma lo tengo per promemoria 
+ * 
+ * .mark ripetuto insieme ai vari stati di .check-box non dovrebbe servire visto che non dovrebbe vedersi
+ */
+.box {
+	-fx-alignment: center;
+	-fx-background-color: #ffffff;
+	-fx-scale-x: 0.0;
+	-fx-scale-y: 0.0;
+	-fx-background-radius: 5.0;
+}
+ 
+.mark {
+	-fx-shape:"m 187.66742,469.91577 -5.91016,2.64453 6.32032,3.23047 -2.23829,4 -8.36718,-4.59375 -8.36719,4.59375 -2.23828,-4 6.49609,-3.44531 -5.77344,-2.42969 2.23829,-4 7.80078,3.79297 7.80078,-3.79297 z";
+ }
+ 
+.check-box .mark {
+	-fx-stroke-borders: #FF0000;
+	-fx-graphic-text-gap: 0.0 ;
+	-fx-background-radius: 5.0;
+}
+
+/*
+ * innershadow( <blur-type> , <color> , <number> , <number> , <number> , <number> )
+ * 		<blur-type> = [ gaussian | one-pass-box | three-pass-box | two-pass-box ]
+ * 		<color> The shadow Color.
+ * 		<number> The radius of the shadow blur kernel. In the range [0.0 ... 127.0], typical value 10.
+ * 		<number> The choke of the shadow. The choke is the portion of the radius where the contribution of the source material will be 100%. The remaining portion of the radius will have a contribution controlled by the blur kernel. A choke of 0.0 will result in a distribution of the shadow determined entirely by the blur algorithm. A choke of 1.0 will result in a solid growth inward of the shadow from the edges to the limit of the radius with a very sharp cutoff to transparency inside the radius. Values should be in the range [0.0 ... 1.0].
+ * 		<number> The shadow offset in the x direction, in pixels.
+ * 		<number> The shadow offset in the y direction, in pixels.
+ * 
+ */
+
+.check-box {
+	-fx-effect: innershadow( three-pass-box , rgba(0.0,0.0,0.0,0.7) , 2.0, 0.0 , 3.0 , 3.0 );
+	
+
+	-fx-background-color: #909090;
+	-fx-background-radius: 5.0;
+}
+
+.check-box:selected {
+	-fx-background-color: #FF0000;
+}
+
+.check-box:indeterminate .mark {
+	-fx-background-color: #0000FF;
+}
+
+.check-box:indeterminate {
+	-fx-background-color: #0000FF;
+}
+
+/*
+ * text-field e related stuff
+ * 
+ * 
+ */
+.text-field {
+	-fx-alignment: center;
+	-fx-font-size: 20.0pt;
+}
+
+.text-field-punti {
+	-fx-alignment: center-right ;
+}

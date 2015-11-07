@@ -20,7 +20,7 @@ public class GiocatoreModel {
 	 * @return TRUE se il nome è stato trovato. FALSE se non viene trovato
 	 * 
 	 */
-	public boolean esisteGiocatoreNelDB(String nome) {
+	public boolean cesisteGiocatoreNelDB(String nome) {
 
 		GiocatoreDAO dao = new GiocatoreDAO();
 

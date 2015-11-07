@@ -7,7 +7,10 @@ import org.ilpider.games.freccette.dao.GiocatoreDAO;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -30,22 +33,14 @@ public class PartitaModel {
 	}
 
 	/**
-	 * Costruttore con parametro per creare una nuova partita mantenendo la lista gia' usata per le partite precedenti
+	 * Aggiunge alla propria List<{@link Giocatore}> quella restituita dal {@link GiocatoreDAO} (gestita nel metodo readGiocatoreByList che prende come parametro la List<String>)
 	 * 
-	 * @param partita E' la lista di giocatori su cui si basa la nuova partita
-	 */
-	public PartitaModel(List<Giocatore> partita) {
-		super();
-		this.partita = partita;
-	}
-
-	/**
-	 * Aggiunge alla List<{@link Giocatore}> il Giocatore restituito dal {@link GiocatoreDAO}.
-	 * Se il {@link Giocatore} NON e' presente nel database, lo aggiunge.
+	 * 2015-11-06 
+	 * 	- Crea il Layout dei giocatori
+	 * 	- Tutta la gestione della verifica, inserimento, e recupero dati dal database è a carica do {@link GiocatoreDAO} 
+	 * 	- Modificato il parametro da (String nome) a (List<String> elencoNomi)
 	 * 
-	 * 2015-11-06 modificato il parametro da (String nome) a (List<String> elencoNomi)
-	 * 
-	 * @param nome del {@link Giocatore} da inserire
+	 * @param elencoNomi e' la List<String> che contiene  nomi e da cui recupero i {@link Giocatore} 
 	 */
 	public void inizializzaPartita(List<String> elencoNomi) {
 
@@ -55,7 +50,8 @@ public class PartitaModel {
 
 		this.partita.addAll(dao.readGiocatoreByList(elencoNomi));
 		// DEBUG Syso di controllo per verificare, grazie all'ID, se il giocatore inserito nella lista della partita viene letto dal database
-		partita.forEach(g -> System.out.println("ID: " + g.getId() + " nome: " + g.getNome()));
+//		partita.forEach(g -> System.out.println("ID: " + g.getId() + " nome: " + g.getNome()));
+
 		creaLayout(partita);
 	}
 
@@ -63,19 +59,32 @@ public class PartitaModel {
 	 * Genera il layout dei giocatori
 	 */
 	public void creaLayout(List<Giocatore> partita) {
+
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/ViewGiocatore.fxml"));
-			GridPane root1 = loader.load();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/ViewPartita.fxml"));
+			GridPane loaderPartita = loader.load();
+
+			RowConstraints row = new RowConstraints();
+			row.setVgrow(Priority.ALWAYS);
+			loaderPartita.getRowConstraints().add(row);
+			
+			for (int i = 0; i < partita.size(); i++) {
+				ColumnConstraints col = new ColumnConstraints();
+				col.setHgrow(Priority.ALWAYS);
+				loaderPartita.getColumnConstraints().add(col);
+				loaderPartita.add(partita.get(i).getViewGiocatore(), i, 0);
+			}
+
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 //            stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("ABC");
-            stage.setScene(new Scene(root1,800,640));  
+            stage.setScene(new Scene(loaderPartita,800,640));
             stage.show();
+
 		} catch (Exception e) {
 			System.out.println("qualcosa non va");
 			e.printStackTrace();
-
 		}
 	}
 

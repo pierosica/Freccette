@@ -41,8 +41,7 @@ public class GiocatoreDAO {
 	}
 
 	/**
-	 * Restituisce come stringa il valore del campo NOME della TBLGIOCATORE che
-	 * ha l'id specificato come parametro
+	 * Restituisce come stringa il valore del campo NOME della TBLGIOCATORE che ha l'id specificato come parametro
 	 * 
 	 * @param id
 	 *            è l'id del giocatore che voglio leggere dal db
@@ -63,19 +62,17 @@ public class GiocatoreDAO {
 			conn.close();
 			return nome;
 		} catch (SQLException e) {
-//			System.out.println("non connetto");
+// System.out.println("non connetto");
 			return null;
 		}
 	}
 
 	/**
-	 * Restituisce TRUE se nel database esiste gia' un giocatore che ha il nome
-	 * di quello che sta verificando se inserire o no.
+	 * Restituisce TRUE se nel database esiste gia' un giocatore che ha il nome di quello che sta verificando se inserire o no.
 	 * 
 	 * @param nome
 	 *            E' il nome del giocatore da verificare se e' gia' presente nel database
-	 * @return TRUE se esiste un record che ha lo stesso nome, FALSE se invece
-	 *         non lo trova
+	 * @return TRUE se esiste un record che ha lo stesso nome, FALSE se invece non lo trova
 	 */
 	public boolean esisteGiocatoreByNome(String nome) {
 
@@ -84,7 +81,6 @@ public class GiocatoreDAO {
 
 		try {
 			PreparedStatement st1 = conn.prepareStatement(query);
-//			System.out.println(query);
 			st1.setString(1, nome);
 			st1.execute();
 			ResultSet rs1 = st1.executeQuery();
@@ -99,27 +95,28 @@ public class GiocatoreDAO {
 		return false;
 	}
 
-	
-	
-	
-	
+	/**
+	 * Restituisce la List<{@link Giocatore}> creata partendo dalla List<nomi> che viene passata come parametro
+	 * Se un nome non e' presente nel database, lo aggiunge lanciando il metodo addGiocatore(nome) 
+	 * 
+	 * @param elencoNomi e' la List<String> che viene passata e che contiene i nomi dei {@link Giocatore} da cui verra' creata la List<{@link Giocatore}>
+	 *  
+	 * @return la List<{@link Giocatore}>
+	 */
 	public List<Giocatore> readGiocatoreByList(List<String> elencoNomi) {
 		List<Giocatore> listGiocatori = new ArrayList<>();
-		
+
+		elencoNomi.forEach(n -> {
+			if (!esisteGiocatoreByNome(n))
+				addGiocatore(n);
+		});
 		elencoNomi.forEach(n -> listGiocatori.add(readGiocatoreByNome(n)));
-		
+
 		return listGiocatori;
-		
 	}
-	
-	
-	
-	
-	
 
 	/**
-	 * Restituisce il {@link Giocatore} che corrisponde a quello trovato nel
-	 * database con il nome specificato
+	 * Restituisce il {@link Giocatore} che corrisponde a quello trovato nel database con il nome specificato
 	 * 
 	 * @param nome
 	 *            E' il nome del giocatore da trovare
@@ -132,7 +129,6 @@ public class GiocatoreDAO {
 
 		try {
 			PreparedStatement st1 = conn.prepareStatement(query);
-//			System.out.println(query);
 			st1.setString(1, nome);
 			st1.execute();
 			ResultSet rs1 = st1.executeQuery();
@@ -151,26 +147,23 @@ public class GiocatoreDAO {
 	 * 
 	 * @param nome
 	 *            nome del {@link Giocatore} da inserire nel database
-	 * @return l'ID del record appena inserito. Se si verifica un errore nell'esecuzione della INSERT -> return 99;
-	 * Se va male la connessione al DB -> return -1;
+	 * @return l'ID del record appena inserito. Se si verifica un errore nell'esecuzione della INSERT -> return 99; Se va male la connessione al DB -> return -1;
 	 * 
 	 */
 	public int addGiocatore(String nome) {
 
 		Connection conn = DBConnect.getConnection();
-		String query = "INSERT INTO `tblgiocatori`(`ID`, `Nome`) VALUES (null,?)";
+		String query = "INSERT INTO `tblgiocatori`(`ID`, `Nome`) VALUES (null,UPPER(?))";
 
 		try {
-			PreparedStatement st1 = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-//			System.out.println(query);
+			PreparedStatement st1 = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			st1.setString(1, nome);
-		
-//			int rowInserted = st1.executeUpdate();
-			int IDGiocatore = st1.executeUpdate() ;
+
+			// int rowInserted = st1.executeUpdate();
+			int IDGiocatore = st1.executeUpdate();
 			ResultSet rs1 = st1.getGeneratedKeys();
 			if (rs1.next()) {
 				IDGiocatore = rs1.getInt(1);
-//				System.out.println("ID del Giocatore: " + IDGiocatore);
 				/* ritorna IDGiocatore che ha valore uguale al campo ID del record del Giocatore appena inserito */
 				return IDGiocatore;
 			}
