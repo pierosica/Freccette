@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.ilpider.games.freccette.view.ViewGiocatoreController;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -20,19 +22,31 @@ public class Giocatore {
 
 	private int id;
 	private String nome;
-	private int punti;
+//	private int punti;
+	private IntegerProperty punti;
 	private GridPane viewGiocatore;
-	private RigaNumero rigaNumeroFix;
+	private RigaNumero rigaNumero;
 	private List<RigaNumero> listRigaNumero;
+	private PartitaModel partitaModel;
 
 	public Giocatore(int id, String nome) {
 		super();
 		this.setId(id);
 		this.nome = nome;
-		this.punti = 0;
+//		this.punti = 0;
+		this.punti = new SimpleIntegerProperty(0);
 		setViewGiocatore();
-		this.viewGiocatore = getViewGiocatore();
+//		this.viewGiocatore = getViewGiocatore();
 		creaListRigaNumero();
+	}
+
+	/* getters and setters, hash code and equals */
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -43,12 +57,20 @@ public class Giocatore {
 		this.nome = nome;
 	}
 
-	public int getId() {
-		return id;
+//	public int getPunti() {
+//		return punti;
+//	}
+//
+//	public void setPunti(int punti) {
+//		this.punti = punti;
+//	}
+
+	public IntegerProperty getPunti() {
+		return punti;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setPunti(int punti) {
+		this.punti.set(punti);
 	}
 
 	public GridPane getViewGiocatore() {
@@ -65,20 +87,46 @@ public class Giocatore {
 			controller = loaderViewGiocatore.getController();
 			controller.setGiocatoreModel(this);
 // controller.setLblNome(this.nome);
-			controller.setLbl1Nome();
-			controller.setLblPunti(this.punti);
+			controller.setLblNome();
+			controller.setLblPunti(this.punti.get());
 
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public int getPunti() {
-		return punti;
+	public void creaListRigaNumero() {
+
+		listRigaNumero = new ArrayList<RigaNumero>();
+
+		int numeri = 21;
+		for (int i = 0; i < numeri; i++) {
+			rigaNumero = new RigaNumero(i);
+			rigaNumero.setGiocatoreModel(this);
+			rigaNumero.getLayoutRigaNumero().autosize();
+//			rigaNumero.setId(i + 1);
+			listRigaNumero.add(rigaNumero);
+
+			RowConstraints row = new RowConstraints();
+			row.setVgrow(Priority.ALWAYS);
+			viewGiocatore.getRowConstraints().add(row);
+
+			viewGiocatore.add(rigaNumero.getLayoutRigaNumero(), 0, 1 + i);
+		}
 	}
 
-	public void setPunti(int punti) {
-		this.punti = punti;
+	public List<RigaNumero> getListRigaNumero() {
+		return this.listRigaNumero;
+	}
+
+	public PartitaModel getPartitaModel() {
+		return this.partitaModel;
+	}
+
+	public void setPartitaModel(PartitaModel partitaModel) {
+		this.partitaModel = partitaModel;
 	}
 
 	@Override
@@ -101,24 +149,5 @@ public class Giocatore {
 		if (id != other.id)
 			return false;
 		return true;
-	}
-
-	public void creaListRigaNumero() {
-
-		listRigaNumero = new ArrayList<RigaNumero>();
-
-		int numeri = 21;
-		for (int i = 0; i < numeri; i++) {
-			rigaNumeroFix = new RigaNumero(i);
-			rigaNumeroFix.setGiocatoreModel(this);
-			rigaNumeroFix.getLayoutRigaNumero().autosize();
-			listRigaNumero.add(rigaNumeroFix);
-
-			RowConstraints row = new RowConstraints();
-			row.setVgrow(Priority.ALWAYS);
-			viewGiocatore.getRowConstraints().add(row);
-
-			viewGiocatore.add(rigaNumeroFix.getLayoutRigaNumero(), 0, 1 + i);
-		}
 	}
 }

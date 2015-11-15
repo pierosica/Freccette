@@ -76,9 +76,9 @@ public class RigaNumero extends AnchorPane {
 	public void setMorto(boolean morto) {
 		this.morto = morto;
 		if (morto == true) {
-			controllerLayoutRigaNumero.setChkMorto();
+			controllerLayoutRigaNumero.setMorto();
 		} else if (morto == false) {
-			controllerLayoutRigaNumero.setChkNonMorto();
+			controllerLayoutRigaNumero.setNonMorto();
 		}
 	}
 
@@ -92,10 +92,10 @@ public class RigaNumero extends AnchorPane {
 			FXMLLoader loaderRigaNumero = new FXMLLoader();
 			loaderRigaNumero.setLocation(getClass().getResource("../view/LayoutRigaNumero.fxml"));
 			layoutRigaNumero = (AnchorPane) loaderRigaNumero.load();
-//			controllerLayoutRigaNumero = loaderRigaNumero.getController();
-//			controllerLayoutRigaNumero.setIDNumero(idRiga);
+			controllerLayoutRigaNumero = loaderRigaNumero.getController();
+//			controllerLayoutRigaNumero.setIDRiga(idRiga);
 //			controllerLayoutRigaNumero.setNumero(numero);
-//			controllerLayoutRigaNumero.setRigaNumeroModel(this);
+			controllerLayoutRigaNumero.setRigaNumeroModel(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

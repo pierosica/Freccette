@@ -20,53 +20,23 @@ public class WelcomeController {
 
 	@FXML
 	private ResourceBundle resources;
-
 	@FXML
 	private URL location;
-
 	@FXML
 	private Button btnNuovaPartita;
-
 	@FXML
 	private HBox hbox;
-
 	@FXML
 	private TextField txtNome1;
-
 	@FXML
 	private TextField txtNome2;
-
 	@FXML
 	private TextField txtNome3;
-
 	@FXML
 	private TextField txtNome4;
 
 	private List<TextField> listNomi;
-
 	private PartitaModel partitaModel;
-
-	/**
-	 * Crea un ArraiList<String> e lo avvalora con TextField.getText() delle TextField che hanno isEmpty=false 
-	 * 
-	 * Lancia il metodoinizializzaPartita nel partitaModel passando come parametrol'ArrayList<String> 
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void doNuovaPartita(ActionEvent event) {
-		// TODO vedere se ha senso restituire una List<String> in cui mettere solo i nomi e lanciare inizializzaPartita(List<String>)
-		// Se lasciato come e' ora lancio 2 volte il metodo inizializzaPartita e rischio di creare 2 volte la nuova finestra dei giocatori
-		
-		// 2015-10-06 fatta la modifica di cui sopra...vediamo...
-		List<String> elencoNomi = new ArrayList<>();
-		listNomi.forEach(tf -> {
-			if (!tf.getText().isEmpty()) {
-				elencoNomi.add(tf.getText());
-			}
-		});
-		partitaModel.inizializzaPartita(elencoNomi);
-	}
 
 	@FXML
 	void initialize() {
@@ -103,6 +73,22 @@ public class WelcomeController {
 				firstTime.setValue(false); // Variable value changed for future references
 			}
 		});
+	}
+
+	/**
+	 * @FXML - * Crea un ArraiList<String> e lo avvalora con TextField.getText() delle TextField che hanno isEmpty=false e lo passa al metodo inizializzaPartita del partitaModel.
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void doNuovaPartita(ActionEvent event) {
+		List<String> elencoNomi = new ArrayList<>();
+		listNomi.forEach(tf -> {
+			if (!tf.getText().isEmpty()) {
+				elencoNomi.add(tf.getText());
+			}
+		});
+		partitaModel.inizializzaPartita(elencoNomi);
 	}
 
 	public void setPartitaModel(PartitaModel partitaModel) {

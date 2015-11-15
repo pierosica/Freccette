@@ -16,55 +16,23 @@ import org.ilpider.games.freccette.model.Giocatore;
 public class GiocatoreDAO {
 
 	/**
-	 * Conta il numero di record nella tabella TBLGIOCATORI
+	 * Restituisce la List<{@link Giocatore}> creata partendo dalla List<nomi> che viene passata come parametro. Se un nome non e' presente nel database, lo aggiunge lanciando il metodo addGiocatore(nome) .
 	 * 
-	 * @return il numero di giocatori nella tabella
-	 */
-	public int contaTutti() {
-
-		Connection conn = DBConnect.getConnection();
-
-		String query = "SELECT count(id) as tutti FROM `tblgiocatori`";
-		try {
-			Statement st1 = conn.createStatement();
-			ResultSet rs1 = st1.executeQuery(query);
-			rs1.next();
-			int numeroRecord = rs1.getInt("tutti");
-			rs1.close();
-			conn.close();
-			return numeroRecord;
-
-		} catch (SQLException e) {
-			System.out.println("non connetto");
-			return -1;
-		}
-	}
-
-	/**
-	 * Restituisce come stringa il valore del campo NOME della TBLGIOCATORE che ha l'id specificato come parametro
+	 * @param elencoNomi
+	 *            e' la List<String> che viene passata e che contiene i nomi dei {@link Giocatore} da cui verra' creata la List<{@link Giocatore}>
 	 * 
-	 * @param id
-	 *            è l'id del giocatore che voglio leggere dal db
-	 * @return (inizialmente) la stringa letta dal campo NOME
+	 * @return la List<{@link Giocatore}>
 	 */
-	public String giocatoreNome(int id) {
+	public List<Giocatore> readGiocatoreByList(List<String> elencoNomi) {
+		List<Giocatore> listGiocatori = new ArrayList<>();
 
-		Connection conn = DBConnect.getConnection();
+		elencoNomi.forEach(n -> {
+			if (!esisteGiocatoreByNome(n))
+				addGiocatore(n);
+		});
+		elencoNomi.forEach(n -> listGiocatori.add(readGiocatoreByNome(n)));
 
-		String query = "SELECT nome FROM `tblgiocatori` where id = " + id;
-
-		try {
-			Statement st1 = conn.createStatement();
-			ResultSet rs1 = st1.executeQuery(query);
-			rs1.next();
-			String nome = rs1.getString("nome");
-			rs1.close();
-			conn.close();
-			return nome;
-		} catch (SQLException e) {
-// System.out.println("non connetto");
-			return null;
-		}
+		return listGiocatori;
 	}
 
 	/**
@@ -93,53 +61,6 @@ public class GiocatoreDAO {
 			e.printStackTrace();
 		}
 		return false;
-	}
-
-	/**
-	 * Restituisce la List<{@link Giocatore}> creata partendo dalla List<nomi> che viene passata come parametro
-	 * Se un nome non e' presente nel database, lo aggiunge lanciando il metodo addGiocatore(nome) 
-	 * 
-	 * @param elencoNomi e' la List<String> che viene passata e che contiene i nomi dei {@link Giocatore} da cui verra' creata la List<{@link Giocatore}>
-	 *  
-	 * @return la List<{@link Giocatore}>
-	 */
-	public List<Giocatore> readGiocatoreByList(List<String> elencoNomi) {
-		List<Giocatore> listGiocatori = new ArrayList<>();
-
-		elencoNomi.forEach(n -> {
-			if (!esisteGiocatoreByNome(n))
-				addGiocatore(n);
-		});
-		elencoNomi.forEach(n -> listGiocatori.add(readGiocatoreByNome(n)));
-
-		return listGiocatori;
-	}
-
-	/**
-	 * Restituisce il {@link Giocatore} che corrisponde a quello trovato nel database con il nome specificato
-	 * 
-	 * @param nome
-	 *            E' il nome del giocatore da trovare
-	 * @return il {@link Giocatore}
-	 */
-	public Giocatore readGiocatoreByNome(String nome) {
-
-		Connection conn = DBConnect.getConnection();
-		String query = "SELECT * from `tblgiocatori` where `nome` = ?";
-
-		try {
-			PreparedStatement st1 = conn.prepareStatement(query);
-			st1.setString(1, nome);
-			st1.execute();
-			ResultSet rs1 = st1.executeQuery();
-			rs1.next();
-
-			Giocatore g = new Giocatore(rs1.getInt("id"), rs1.getString("nome"));
-			return g;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	/**
@@ -174,5 +95,32 @@ public class GiocatoreDAO {
 			/* ritorna -1 se è andata male la connessione con il database */
 			return -1;
 		}
+	}
+
+	/**
+	 * Restituisce il {@link Giocatore} che corrisponde a quello trovato nel database con il nome specificato
+	 * 
+	 * @param nome
+	 *            E' il nome del giocatore da trovare
+	 * @return il {@link Giocatore}
+	 */
+	public Giocatore readGiocatoreByNome(String nome) {
+
+		Connection conn = DBConnect.getConnection();
+		String query = "SELECT * from `tblgiocatori` where `nome` = ?";
+
+		try {
+			PreparedStatement st1 = conn.prepareStatement(query);
+			st1.setString(1, nome);
+			st1.execute();
+			ResultSet rs1 = st1.executeQuery();
+			rs1.next();
+
+			Giocatore g = new Giocatore(rs1.getInt("id"), rs1.getString("nome"));
+			return g;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

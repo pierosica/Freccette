@@ -53,7 +53,15 @@
 /*
  * label e related
  */
- 
+.lbl {
+	-fx-background-color: #818181;
+}
+.lbl-presa {
+	-fx-background-color: #ff0000;
+}
+.lbl-morta {
+	-fx-background-color: #0000ff;
+}
 .label-puntiCaricati {
 	-fx-font-size: 12.0pt;
 }

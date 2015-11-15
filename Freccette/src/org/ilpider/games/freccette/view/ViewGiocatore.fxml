@@ -21,7 +21,7 @@
                   <Font size="29.0" />
                </font>
             </Label>
-            <Label fx:id="lblPunti" HBox.hgrow="NEVER">
+            <Label fx:id="lblPunti" textFill="RED" HBox.hgrow="NEVER">
                <font>
                   <Font size="29.0" />
                </font>
