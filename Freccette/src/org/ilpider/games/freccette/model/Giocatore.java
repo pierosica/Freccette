@@ -3,7 +3,7 @@ package org.ilpider.games.freccette.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ilpider.games.freccette.view.ViewGiocatoreController;
+import org.ilpider.games.freccette.view.GiocatoreViewController;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -22,7 +22,6 @@ public class Giocatore {
 
 	private int id;
 	private String nome;
-//	private int punti;
 	private IntegerProperty punti;
 	private GridPane viewGiocatore;
 	private RigaNumero rigaNumero;
@@ -33,10 +32,8 @@ public class Giocatore {
 		super();
 		this.setId(id);
 		this.nome = nome;
-//		this.punti = 0;
 		this.punti = new SimpleIntegerProperty(0);
 		setViewGiocatore();
-//		this.viewGiocatore = getViewGiocatore();
 		creaListRigaNumero();
 	}
 
@@ -57,14 +54,6 @@ public class Giocatore {
 		this.nome = nome;
 	}
 
-//	public int getPunti() {
-//		return punti;
-//	}
-//
-//	public void setPunti(int punti) {
-//		this.punti = punti;
-//	}
-
 	public IntegerProperty getPunti() {
 		return punti;
 	}
@@ -80,17 +69,13 @@ public class Giocatore {
 	private void setViewGiocatore() {
 		try {
 			FXMLLoader loaderViewGiocatore = new FXMLLoader();
-			loaderViewGiocatore.setLocation(getClass().getResource("../view/ViewGiocatore.fxml"));
+			loaderViewGiocatore.setLocation(getClass().getResource("../view/GiocatoreView.fxml"));
 			this.viewGiocatore = loaderViewGiocatore.load();
 
-			ViewGiocatoreController controller = loaderViewGiocatore.getController();
+			GiocatoreViewController controller = loaderViewGiocatore.getController();
 			controller = loaderViewGiocatore.getController();
 			controller.setGiocatoreModel(this);
-// controller.setLblNome(this.nome);
 			controller.setLblNome();
-			controller.setLblPunti(this.punti.get());
-
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

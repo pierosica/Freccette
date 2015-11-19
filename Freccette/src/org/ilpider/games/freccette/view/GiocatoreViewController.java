@@ -9,7 +9,7 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class ViewGiocatoreController {
+public class GiocatoreViewController {
 
 	@FXML
 	private ResourceBundle resources;
@@ -23,18 +23,8 @@ public class ViewGiocatoreController {
 	private Giocatore giocatoreModel;
 
 	public void setGiocatoreModel(Giocatore giocatoreModel) {
+
 		this.giocatoreModel = giocatoreModel;
-/*		lblPunti.textProperty().bind(new StringBinding() {
-			{
-				bind(giocatoreModel.getPuntiP());
-			}
-
-			@Override
-			protected String computeValue() {
-				return giocatoreModel.getPuntiP().toString();
-			}
-
-		});*/
 		
 		lblPunti.textProperty().bind(Bindings.convert(giocatoreModel.getPunti()));
 	}
@@ -49,9 +39,7 @@ public class ViewGiocatoreController {
 		lblNome.setText(giocatoreModel.getNome());
 	}
 
-	public void setLblPunti(int punti) {
-// lblPunti.setText("" + punti);
-		lblPunti.textProperty().bind(giocatoreModel.getPunti().asString());
-		System.out.println("aaaPuntiP: " + giocatoreModel.getPunti());
-	}
+//	public void setLblPunti(int punti) {
+//		lblPunti.textProperty().bind(giocatoreModel.getPunti().asString());
+//	}
 }

@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class ControllerLayoutRigaNumero {
+public class RigaNumeroViewController {
 
 	@FXML
 	private ResourceBundle resources;
@@ -27,8 +27,6 @@ public class ControllerLayoutRigaNumero {
 	@FXML
 	private Button btnTogli;
 
-//	private int IDRiga;
-//	private int numero;
 	private RigaNumero rigaNumeroModel;
 
 	@FXML
@@ -61,56 +59,24 @@ public class ControllerLayoutRigaNumero {
 		assert btnTogli != null : "fx:id=\"btnTogli\" was not injected: check your FXML file 'LayoutRigaNumero.fxml'.";
 		assert btnPreso != null : "fx:id=\"btnPreso\" was not injected: check your FXML file 'LayoutRigaNumero.fxml'.";
 
-//		btnPreso.setText("" + rigaNumeroModel.getNumero());
-//		btnPreso.setText("" + getNumero());
-//		if (getNumero() == 25) {
-//			btnPreso.setText("Bull");
-//		}
-
 		lblA.setUserData("");
 		lblB.setUserData("");
 		lblC.setUserData("");
-
-		
 	}
 
 	/*
 	 * metodi
 	 */
 	public void setMorto() {
-		
 		lblA.getStyleClass().add("lbl-morta");
 		lblB.getStyleClass().add("lbl-morta");
 		lblC.getStyleClass().add("lbl-morta");
-//		for (Node n : rigaNumeroModel.getLayoutRigaNumero().lookupAll(".check-box")) {
-//			System.out.println(rigaNumeroModel.isMorto() + "setChkMorto  trovato in controller " + n.getId() + " " + n.getPseudoClassStates());
-//		}
-
-//		lblA.setIndeterminate(true);
-//		lblB.setIndeterminate(true);
-//		lblC.setIndeterminate(true);
-
-//		for (Node n : rigaNumeroModel.getLayoutRigaNumero().lookupAll(".check-box")) {
-//			System.out.println("setChkMorto  trovato in controller " + n.getId() + " " + n.getPseudoClassStates());
-//		}
 	}
 
 	public void setNonMorto() {
-
 		lblA.getStyleClass().add("lbl-chiusa");
 		lblB.getStyleClass().add("lbl-chiusa");
 		lblC.getStyleClass().add("lbl-chiusa");
-//		for (Node n : rigaNumeroModel.getLayoutRigaNumero().lookupAll(".check-box")) {
-//			System.out.println("setChkNonMorto  trovato in controller " + n.getId() + " " + n.getPseudoClassStates());
-//		}
-
-//		chkA.setIndeterminate(false);
-//		chkB.setIndeterminate(false);
-//		chkC.setIndeterminate(false);
-
-//		for (Node n : rigaNumeroModel.getLayoutRigaNumero().lookupAll(".check-box")) {
-//			System.out.println("setChkNonMorto  trovato in controller " + n.getId() + " " + n.getPseudoClassStates());
-//		}
 	}
 
 	public int chkAperte() {

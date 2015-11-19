@@ -2,7 +2,7 @@ package org.ilpider.games.freccette.model;
 
 import java.io.IOException;
 
-import org.ilpider.games.freccette.view.ControllerLayoutRigaNumero;
+import org.ilpider.games.freccette.view.RigaNumeroViewController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -15,7 +15,7 @@ public class RigaNumero extends AnchorPane {
 	private boolean morto;
 	private AnchorPane layoutRigaNumero;
 	private Giocatore giocatoreModel;
-	private ControllerLayoutRigaNumero controllerLayoutRigaNumero;
+	private RigaNumeroViewController controllerLayoutRigaNumero;
 
 	/*
 	 * costruttore
@@ -37,7 +37,6 @@ public class RigaNumero extends AnchorPane {
 	 */
 	public int puntiDaAperte() {
 		int n = 0;
-//		System.out.println(controllerLayoutRigaNumero.chkAperte() * numero);
 		n = controllerLayoutRigaNumero.chkAperte() * numero;
 		return n;
 	}
@@ -90,11 +89,9 @@ public class RigaNumero extends AnchorPane {
 
 		try {
 			FXMLLoader loaderRigaNumero = new FXMLLoader();
-			loaderRigaNumero.setLocation(getClass().getResource("../view/LayoutRigaNumero.fxml"));
+			loaderRigaNumero.setLocation(getClass().getResource("../view/RigaNumeroView.fxml"));
 			layoutRigaNumero = (AnchorPane) loaderRigaNumero.load();
 			controllerLayoutRigaNumero = loaderRigaNumero.getController();
-//			controllerLayoutRigaNumero.setIDRiga(idRiga);
-//			controllerLayoutRigaNumero.setNumero(numero);
 			controllerLayoutRigaNumero.setRigaNumeroModel(this);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -109,12 +106,12 @@ public class RigaNumero extends AnchorPane {
 		this.giocatoreModel = giocatoreModel;
 	}
 
-	public ControllerLayoutRigaNumero getControllerLayoutRigaNumero() {
+	public RigaNumeroViewController getControllerLayoutRigaNumero() {
 		return controllerLayoutRigaNumero;
 	}
 
 	public void setControllerLayoutRigaNumero(
-			ControllerLayoutRigaNumero controllerLayoutRigaNumero) {
+			RigaNumeroViewController controllerLayoutRigaNumero) {
 		this.controllerLayoutRigaNumero = controllerLayoutRigaNumero;
 	}
 }

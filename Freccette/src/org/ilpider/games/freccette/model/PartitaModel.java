@@ -55,7 +55,7 @@ public class PartitaModel {
 	private void creaLayoutGiocatori(List<Giocatore> elencoGiocatori) {
 
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/ViewPartita.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/PartitaView.fxml"));
 			GridPane loaderPartita = loader.load();
 
 			// Senza questa RowConstraints il LayoutGiocaotre non riempie l'altezza del LayoutPartita
@@ -77,7 +77,6 @@ public class PartitaModel {
 			stage.setScene(new Scene(loaderPartita, 800, 640));
 			stage.show();
 		} catch (Exception e) {
-			System.out.println("qualcosa non va");
 			e.printStackTrace();
 		}
 	}
@@ -102,8 +101,14 @@ public class PartitaModel {
 		}
 	}
 
+	/**
+	 * Gestisce tutta la parte del caricamento dei Punti sia quando un numero e' CHIUSO sia quando e' MORTO
+	 * 
+	 * @param idRiga
+	 *            e' il {@link RigaNumero} che e' stato "clikkato"
+	 */
 	public void sommaPunti(int idRiga) {
-			Stream<Giocatore> giocatoriDaCaricare = listaGiocatori.stream().filter(c -> !c.getListRigaNumero().get(idRiga).isChiuso());
-			giocatoriDaCaricare.forEach(c -> c.setPunti(c.getPunti().get() + c.getListRigaNumero().get(idRiga).getNumero()));
+		Stream<Giocatore> giocatoriDaCaricare = listaGiocatori.stream().filter(c -> !c.getListRigaNumero().get(idRiga).isChiuso());
+		giocatoriDaCaricare.forEach(c -> c.setPunti(c.getPunti().get() + c.getListRigaNumero().get(idRiga).getNumero()));
 	}
 }

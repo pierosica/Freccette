@@ -16,7 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
-public class WelcomeController {
+public class WelcomeViewController {
 
 	@FXML
 	private ResourceBundle resources;
