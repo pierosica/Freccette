@@ -74,9 +74,9 @@ public class RigaNumero extends AnchorPane {
 
 	public void setMorto(boolean morto) {
 		this.morto = morto;
-		if (morto == true) {
+		if (this.morto == true) {
 			controllerLayoutRigaNumero.setMorto();
-		} else if (morto == false) {
+		} else if (this.morto == false) {
 			controllerLayoutRigaNumero.setNonMorto();
 		}
 	}

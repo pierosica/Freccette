@@ -52,6 +52,23 @@ public class RigaNumeroViewController {
 	@FXML
 	void doBtnTogli(ActionEvent event) {
 
+		if (rigaNumeroModel.isMorto()) {
+			rigaNumeroModel.setChiuso(false);
+			rigaNumeroModel.getGiocatoreModel().getPartitaModel().isNumeroMorto(getIDRiga());
+		}
+
+		if (rigaNumeroModel.isChiuso()) {
+			
+		}
+
+		if (lblC.getUserData().equals("preso")) {
+			lblC.setUserData("");
+			lblC.getStyleClass().clear();
+			rigaNumeroModel.setChiuso(false);
+			rigaNumeroModel.getGiocatoreModel().getPartitaModel().isNumeroMorto(getIDRiga());
+		} else if (lblB.getUserData().equals("preso")) {
+			
+		}
 	}
 
 	@FXML
@@ -74,6 +91,9 @@ public class RigaNumeroViewController {
 	}
 
 	public void setNonMorto() {
+		lblA.getStyleClass().remove("lbl-morta");
+		lblB.getStyleClass().remove("lbl-morta");
+		lblC.getStyleClass().remove("lbl-morta");
 		lblA.getStyleClass().add("lbl-chiusa");
 		lblB.getStyleClass().add("lbl-chiusa");
 		lblC.getStyleClass().add("lbl-chiusa");
